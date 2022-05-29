@@ -1,21 +1,31 @@
-import React from "react"
+import React,{useEffect, useState} from "react"
 import Navbar from "./components/navBar"
 import "./App.css"
 import Searchbar from "./components/SearchBar"
-import {searchPokemon} from "./components/Api"
+import Pokedex from "./components/pokedex"
+import { getPokemons } from "./components/Api"
 
-const onSearchHandler = async (pokemon) => {
-  console.log(pokemon)
-}
-
-export default class App extends React.Component{
-  render(){
-    return(
-      <>
-     
-        <Navbar />
-        <Searchbar onSearch={onSearchHandler} />
-      </>
-    )
+export default function App (){
+  const [loading, setLoading] = useState(false)
+  const [pokemons, setPokemons] = useState([])
+  const fetchPokemons = async () =>{
+    try{
+      setLoading(true)
+      const result = await getPokemons();
+      setPokemons(result);
+      setLoading(false)
+    }catch(error){
+      console.log("fetchPokemons error:", error);
+    }
   }
+  useEffect(()=>{
+    console.log("carregou")
+  })
+  return(
+    <>
+      <Navbar />
+      <Searchbar />
+      <Pokedex pokemons={pokemons} loading={loading} />
+    </>
+  )
 }

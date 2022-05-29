@@ -9,14 +9,12 @@ display: flex;
 justify-content: space-around;
 align-items: center;
 `
-
 export default function Navbar (){
     return(
         <Nav>
             <div>
                 <img src={Logo}/>
-            </div>
-            
+            </div>           
         </Nav>
     )
 }
