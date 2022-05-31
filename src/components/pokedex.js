@@ -12,12 +12,30 @@ display: grid;
 gap: 10px;
 grid-template-columns: repeat(3, 1fr);
 `
-
-export default function Pokedex (){
+export default function Pokedex (props){
+    const {pokemons, loading} = props;
     return(
-        <PokedexHeader>
+        <>
+         <PokedexHeader>
             <h1>Pokedex</h1>
             <div>Paginação</div>
         </PokedexHeader>
+        {loading ?(<div>
+            Carregando....
+        </div>):(<PokedexGrid>
+            {pokemons.map((pokemon, index)=>{
+                return(
+                    <div>
+                        <div>
+                            {pokemon.id}
+                        </div>
+                        <div>{pokemon.name}</div>
+                        <img alt={pokemon.name} src={pokemon.sprites.front_default}/>
+                    </div>
+                )
+            })}
+        </PokedexGrid>)}
+        </>
+       
     )
 }
